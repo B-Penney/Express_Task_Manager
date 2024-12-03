@@ -1,6 +1,34 @@
 const express = require('express');
 const app = express();
 const PORT = 3000;
+const { Pool } = require('pg');
+
+// PostgreSQL Connection
+const pool = new Pool({
+    user: 'postgres',
+    host: 'localhost',
+    database: 'ExpressTaskManager',
+    password: 'password',
+    port: 5432,
+});
+
+// Create a table function
+async function createTable() {
+    try {
+        await pool.query(
+            `CREATE TABLE IF NOT EXISTS tasks (
+            id SERIAL PRIMARY KEY,
+            description TEXT NOT NULL,
+            status TEXT NOT NULL
+            );`
+        );
+      console.log("Task table has been created successfully");
+    } catch (error) {
+      console.error("Invalid table:", error)
+    }
+}
+// 
+createTable();
 
 app.use(express.json());
 
