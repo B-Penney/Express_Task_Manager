@@ -1,0 +1,30 @@
+
+
+// Connect to the MongoDB instance that was created 
+use usedBooks;  
+
+// Create a collection named books
+db.createCollection("books");
+
+// Insert Sample Data
+db.books.insertMany([
+    { title: "The Hobbit", author: "J.R.R Tolkien", genre: "Fantasy", publishedYear: 1937 },
+    { title: "To Kill a Mockingbird", author: "Harper Lee", genre: "Fiction", publishedYear: 1960 },
+    { title: "1984", author: "George Orwell", genre: "Dystopian", publishedYear: 1949 }
+]);
+
+// Write Queries
+// Retrieve titles of all books.
+db.books.find({},{_id: 0, title: 1});
+
+// Find all books written by “J.R.R. Tolkien”.
+db.books.find({ author: "J.R.R Tolkien"});
+
+// Update genre of “1984” to "Science Fiction".
+db.books.updateOne(
+    { title: "1984" },
+    { $set: { genre: "Science Fiction"}}
+);
+
+// Delete book “The Hobbit”.
+db.books.deleteOne({ title: "The Hobbit"});
